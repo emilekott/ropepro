@@ -61,3 +61,4 @@ readme.html
 license.txt
 *.log
 local-config.php
+wp-config.php
