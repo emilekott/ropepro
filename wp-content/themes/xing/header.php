@@ -23,6 +23,7 @@ $dir = get_template_directory_uri(); ?>
 <?php if ( is_singular() && get_option( 'thread_comments' ) )
 	wp_enqueue_script( 'comment-reply' );
 wp_head(); ?>
+<link href='http://fonts.googleapis.com/css?family=Julius+Sans+One' rel='stylesheet' type='text/css'>
 </head>
 <?php /* Add custom body class depending upon the layout style */
 $new_body_class  = ( $xng_layout == 'stretched' ) ? 'is-stretched' : '';

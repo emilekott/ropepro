@@ -1,11 +1,11 @@
 /* 	-------------------------------------------------
-	user.css for customizations
-	-------------------------------------------------
-	Use this file for adding custom CSS style.
-	These styles will override default theme styles.
-	You can enable/disable this CSS file inside
-	WordPress Appearance > Xing Options > General
-	-------------------------------------------------
+        user.css for customizations
+        -------------------------------------------------
+        Use this file for adding custom CSS style.
+        These styles will override default theme styles.
+        You can enable/disable this CSS file inside
+        WordPress Appearance > Xing Options > General
+        -------------------------------------------------
 */
 
 /* Add your custom styles in this section */
@@ -26,10 +26,64 @@
 
 /* MOBILE: 412px */
 @media only screen and (min-width: 412px) and (max-width: 739px) {
-
+    .header-widget-area{display:none;}
 }
 
 /* MOBILE: 282px */
 @media only screen and (max-width: 411px) {
-
+    .header-widget-area{display:none;}
+    h1 img{
+        width: 242px;
+    }
+    li.cart_status{
+        float:right;
+    }
 }
+
+/* Colour scheme
+.primary-1 { background-color: #CADB2A }
+.primary-2 { background-color: #9BA441 }
+.primary-3 { background-color: #828E0E }
+.primary-4 { background-color: #DFED5D }
+.primary-5 { background-color: #E3ED84 }
+*/
+
+body{
+    background: url('images/bg.jpg');
+    
+}
+
+
+
+/* Header Stuff */
+
+.brand {
+    position: relative;
+    overflow: hidden;
+    float: left;
+    width: auto;
+    margin: 0;
+    padding: 20px 0 20px 20px;
+}
+
+#utility #callout{
+    text-transform: uppercase;
+    font-family: 'Julius Sans One', sans-serif;
+}
+
+.header-widget-area {
+    position: relative;
+    overflow: hidden;
+    float: right;
+    padding: 0 20px 0 0;
+    margin: 15px 0 15px 0;
+    width: 460px;
+    text-align: right;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+}
+
+aside.widget_search{
+    margin-bottom: 0;
+}
+
+/* End Header Stuff */
