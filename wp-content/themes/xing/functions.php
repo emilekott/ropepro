@@ -640,4 +640,9 @@ function load_theme_vars() {
 		}
 	}
 }
-add_action( 'init','load_theme_vars' );?>
+add_action( 'init','load_theme_vars' );
+
+
+
+
+?>

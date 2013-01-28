@@ -497,7 +497,11 @@ function get_woocommerce_currency_symbol( $currency = '' ) {
  */
 function woocommerce_price( $price, $args = array() ) {
 	global $woocommerce;
-
+        global $post;
+        $post_ID  = $post->ID;
+        $post_meta = get_post_meta($post_ID, 'per_metre', true );
+        $per_m = ($post_meta == 1) ? "per metre" : "";  
+        
 	extract( shortcode_atts( array(
 		'ex_tax_label' 	=> '0'
 	), $args ) );
@@ -531,7 +535,7 @@ function woocommerce_price( $price, $args = array() ) {
 
 	if ( $ex_tax_label && get_option( 'woocommerce_calc_taxes' ) == 'yes' )
 		$return .= ' <small>' . $woocommerce->countries->ex_tax_or_vat() . '</small>';
-
+        $return .= " ".$per_m;
 	return $return;
 }
 
