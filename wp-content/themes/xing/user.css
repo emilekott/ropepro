@@ -53,9 +53,16 @@ body{
     
 }
 
+#container{
+    margin: 10px auto;
+}
 
 
 /* Header Stuff */
+#top-menu{
+    display: none;
+}
+
 
 .brand {
     position: relative;
