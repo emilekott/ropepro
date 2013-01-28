@@ -10,6 +10,18 @@
 
 /* Add your custom styles in this section */
 /* -------------------------------------- */
+.primary-1 { background-color: #115666 }
+.primary-2 { background-color: #1C454F }
+.primary-3 { background-color: #063945 }
+.primary-4 { background-color: #429CB1 }
+.primary-5 { background-color: #5FA2B1 }
+
+.complement-1 { background-color: #A55E17 }
+.complement-2 { background-color: #7F552B }
+.complement-3 { background-color: #703C09 }
+.complement-4 { background-color: #D18D4A }
+.complement-5 { background-color: #D19F6D }
+
 
 
 
@@ -94,3 +106,33 @@ aside.widget_search{
 }
 
 /* End Header Stuff */
+
+
+
+/*Product pricing */
+ul.products li.product span.price, div.product span.price, div.product p.price, ul.products li.product span.price {
+    color: #A55E17;
+}
+
+a.button.alt, button.button.alt, input.button.alt, #respond input#submit.alt {
+background-color: #429CB1;
+}
+
+.quantity-desc{
+    font-style: italic;
+    font-size: 0.7em;
+}
+
+td .quantity-desc{
+    font-size: 0.9em;
+}
+
+.quantity {
+width: 60px;
+position: relative;
+margin: 0 auto;
+overflow: hidden;
+zoom: 1;
+display: inline-block;
+vertical-align:middle;
+}

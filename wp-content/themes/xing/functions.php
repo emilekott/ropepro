@@ -644,5 +644,4 @@ add_action( 'init','load_theme_vars' );
 
 
 
-
 ?>
