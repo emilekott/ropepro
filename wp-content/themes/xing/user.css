@@ -136,3 +136,32 @@ zoom: 1;
 display: inline-block;
 vertical-align:middle;
 }
+
+
+
+/*Rope options*/
+.gform_wrapper .gform_footer {
+padding: 0;
+margin: 0;
+clear: both;
+}
+
+.product-addon{
+    margin-bottom: 20px;
+}
+
+.product-addon h3{
+    margin: 10px 0 4px 0;
+    font-weight: bold;
+    display: -moz-inline-stack;
+    display: inline-block;
+    line-height: 1.3em;
+    font-size: 12px;
+}
+
+form .form-row select {
+    width: 47%;
+    cursor: pointer;
+    margin: 0;
+    padding: 4px 2px;
+}

@@ -32,7 +32,8 @@ global $woocommerce;
 		if ( sizeof( $woocommerce->cart->get_cart() ) > 0 ) {
 			foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $values ) {
 				$_product = $values['data'];
-                                
+                                $quantity_desc = "";
+                                $quant = "";
                                 $product_type = get_post_meta($_product->id, 'type', true);
                                 switch ($product_type){
                                     case "pm":
