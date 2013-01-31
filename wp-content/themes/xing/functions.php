@@ -91,6 +91,16 @@ if ( !function_exists( 'xing_widgets_init' ) ) :
 			'before_title' => '<h3 class="sb-title">',
 			'after_title' => '</h3>',
 		) );
+                
+                register_sidebar( array(
+			'name' => __( 'Product Sidebar', 'xing' ),
+			'id' => 'product-sidebar',
+			'description' => __( 'Sidebar', 'xing' ),
+			'before_widget' => '<aside id="%1$s" class="widgetwrap %2$s">',
+			'after_widget' => "</aside>",
+			'before_title' => '<h3 class="sb-title">',
+			'after_title' => '</h3>',
+		) );
 
 		register_sidebar( array(
 			'name' => __( 'Default Secondary Column 1', 'xing' ),
@@ -661,6 +671,16 @@ function horizontal_widgets_init() {
 	) );
 }
 add_action( 'widgets_init', 'horizontal_widgets_init' );
+
+
+
+//remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
+remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0 );
+//add_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 5, 0 );
+
+
+// Display 20 products per page. Goes in functions.php
+add_filter( 'loop_shop_per_page', create_function( '$cols', 'return 20;' ), 20 );
 
 
 ?>

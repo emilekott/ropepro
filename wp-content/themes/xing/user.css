@@ -72,7 +72,7 @@ body{
 
 /* Header Stuff */
 #top-menu{
-    display: none;
+    /*display: none;*/
 }
 
 
@@ -198,4 +198,34 @@ form .form-row select {
 
 select.orderby{
     display:none;
+}
+
+
+
+/*add page header*/
+#page-header{
+    margin: 0 10px 0;
+}
+
+
+
+/*reverse columns on cat pages */
+.archive.tax-product_cat #content{
+    float:right;
+}
+
+.archive.tax-product_cat #sidebar{
+    float:left;
+}
+
+
+/*left sidebar for cat pages*/
+#sidebar select{
+    width: 100%;
+}
+
+
+
+img.cat-header{
+    margin-bottom: 20px;
 }

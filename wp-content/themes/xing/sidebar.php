@@ -7,8 +7,14 @@ if ( is_page() ) {
 	$sb_usage = (isset($page_opts['sb_usage'])) ? $page_opts['sb_usage'] : 'default-sidebar';
 }
 elseif ( is_single() ) {
+    if (is_product()){
+        $post_opts = get_post_meta( $posts[0]->ID, 'post_options', true );
+	$sb_usage = (isset($post_opts['sb_usage'])) ? $post_opts['sb_usage'] : 'product-sidebar';
+    }
+    else{
 	$post_opts = get_post_meta( $posts[0]->ID, 'post_options', true );
 	$sb_usage = (isset($post_opts['sb_usage'])) ? $post_opts['sb_usage'] : 'default-sidebar';
+    }
 } ?>
 <div id="sidebar"<?php if ( $xng_sb_pos == 'left' ) echo(' class="sb-left"'); ?> role="complementary" >
 <?php if ( is_page() || is_single() ) {

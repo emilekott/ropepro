@@ -11,17 +11,21 @@
 get_header('shop');
 ?>
 
-<?php
-/**
- * woocommerce_before_main_content hook
- *
- * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
- * @hooked woocommerce_breadcrumb - 20
- */
-do_action('woocommerce_before_main_content');
+<div id="page-header">
+<?php 
+    global $wp_query;
+    // get the query object
+    $cat = $wp_query->get_queried_object();
+    // get the thumbnail id user the term_id
+    $thumbnail_id = get_woocommerce_term_meta( $cat->term_id, 'thumbnail_id', true ); 
+    // get the image URL
+    $image = wp_get_attachment_url( $thumbnail_id ); 
+    // print the IMG HTML
+    if ($image)
+    echo '<img src="'.$image.'" alt="" width="960" height="200" class="cat-header" />';
+
 ?>
-
-
+<?php woocommerce_breadcrumb(); ?>
 <h1 class="page-title">
  
     <?php if (is_search()) : ?>
@@ -41,7 +45,6 @@ do_action('woocommerce_before_main_content');
     <?php endif; ?>
 </h1>
 
-
 <?php do_action('woocommerce_archive_description'); ?>
 
 
@@ -50,6 +53,21 @@ do_action('woocommerce_before_main_content');
 <?php elseif (!empty($shop_page) && is_object($shop_page)) : ?>
     <?php do_action('woocommerce_product_archive_description', $shop_page); ?>
 <?php endif; ?>
+</div>
+<?php
+/**
+ * woocommerce_before_main_content hook
+ *
+ * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
+ * @hooked woocommerce_breadcrumb - 20
+ */
+do_action('woocommerce_before_main_content');
+?>
+
+<h2>Results</h2>
+
+
+
 
 
    <div id="top-bar" role="complementary">
