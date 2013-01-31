@@ -61,7 +61,7 @@
 */
 
 body{
-    background: url('images/bg.jpg');
+   /* background: url('images/bg.jpg');*/
     
 }
 
@@ -138,6 +138,15 @@ vertical-align:middle;
 }
 
 
+ul.products li.product span.price span.from, span.from {
+font-size: 16px;
+text-transform: none;
+color: #A55E17;
+margin: 0;
+font-weight: bold;
+}
+
+
 
 /*Rope options*/
 .gform_wrapper .gform_footer {
@@ -164,4 +173,29 @@ form .form-row select {
     cursor: pointer;
     margin: 0;
     padding: 4px 2px;
+}
+
+
+
+
+/*new widget area */
+#top-bar {  float:left; color:#777; width:100%; margin:0; clear:both; }
+#top-bar aside{float:left; width: 25%; margin: 0 5% 0 0;}
+
+#top-bar ul { margin:-6px 0 18px; padding:0; list-style:none }
+#top-bar ul li { padding:6px 0; border-bottom:1px solid #eee; display:block }
+#top-bar ul ul { margin:6px 0; border-top:1px solid #eee }
+#top-bar ul ul li { padding-left:15px; background:url(images/list_arrow.gif) 4px 14px no-repeat }
+#top-bar ul ul li:last-child { border-bottom:none; padding-bottom:0 }
+#top-bar ul a { color:#777; text-decoration:none }
+#top-bar ul a:hover { color:#333; text-decoration:none }
+
+#top-bar .wpcf7 p, #secondary .wpcf7 p { margin-bottom:9px !important; }
+#top-bar.wpcf7-form textarea, #secondary .wpcf7-form textarea { height:90px }
+#products{clear: both;}
+
+
+
+select.orderby{
+    display:none;
 }

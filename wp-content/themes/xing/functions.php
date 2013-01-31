@@ -643,5 +643,24 @@ function load_theme_vars() {
 add_action( 'init','load_theme_vars' );
 
 
+/**
+ * Register another widget area
+ *
+ */
+function horizontal_widgets_init() {
+
+	register_sidebar( array(
+                'name' => __( 'Horizontal Widget Area', 'xing' ),
+			'id' => 'horizontal_widget',
+			'description' => __( 'Horizontal Widget Area', 'xing' ),
+			'before_widget' => '<aside id="%1$s" class="widgetwrap %2$s">',
+			'after_widget' => "</aside>",
+			'before_title' => '<h3 class="sc-title">',
+			'after_title' => '</h3>',
+
+	) );
+}
+add_action( 'widgets_init', 'horizontal_widgets_init' );
+
 
 ?>
