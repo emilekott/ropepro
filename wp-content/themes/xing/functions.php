@@ -683,4 +683,24 @@ remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 
 add_filter( 'loop_shop_per_page', create_function( '$cols', 'return 20;' ), 20 );
 
 
+
+add_filter( 'woocommerce_billing_fields' , 'custom_override_billing_fields' );
+
+function custom_override_billing_fields( $fields ) {
+  //unset($fields['billing_company']);
+  return $fields;
+}
+
+
+// Hook in
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+ 
+// Our hooked in function - $fields is passed via the filter!
+function custom_override_checkout_fields( $fields ) {
+     $fields['order']['order_comments']['placeholder'] = 'Please provide full details of the use of each rope eg. halyard or sheet...';
+     return $fields;
+}
+
+
+
 ?>
