@@ -64,7 +64,7 @@ get_header('shop');
 do_action('woocommerce_before_main_content');
 ?>
 
-<h2>Results</h2>
+<h2>Products</h2>
 
 
 

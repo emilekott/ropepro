@@ -43,12 +43,25 @@
 
 /* MOBILE: 282px */
 @media only screen and (max-width: 411px) {
+    #top-menu{display:none;}
     .header-widget-area{display:none;}
     h1 img{
         width: 242px;
     }
     li.cart_status{
         float:right;
+    }
+    #page-header{
+        margin: 0 !important;
+    }
+    #page-header img{
+        max-width: 100%;
+        height: auto;
+        display: none;
+    }
+    #breadcrumb{display:none;}
+    .term-description{
+        display: none;
     }
 }
 
