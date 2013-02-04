@@ -242,3 +242,38 @@ select.orderby{
 img.cat-header{
     margin-bottom: 20px;
 }
+
+
+
+
+/*right sidebar question*/
+ul#gform_fields_12{margin:0;}
+li#field_12_1, li#field_12_2{
+    float:left;
+    width: 80px;
+    clear: none;
+    margin-bottom:0;
+    padding-bottom: 0 !important;
+}
+
+li#field_12_1{
+    margin-right: 12px;
+}
+
+li#field_12_3{
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+}
+
+li#field_12_1 input, li#field_12_2 input{
+    width: 100%;
+}
+
+#gform_widget-2 .gform_footer{
+    float: right;
+}
+
+.gform_wrapper li.gfield.gfield_error{
+    padding: 0 !important;
+    border: none !important;
+}
