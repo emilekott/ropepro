@@ -286,6 +286,6 @@ form .form-row-last {
     float: left;
 }
 
-fieldset form .form-row-last {
+fieldset .form-row-last {
     float: right;
 }
