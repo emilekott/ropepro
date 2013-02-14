@@ -62,6 +62,11 @@ $new_body_class .= ( $xng_top_bar_hide != 'true' ) ? ' no-border' : ''; ?>
                     <h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><img src="<?php if ( $xng_logo != '' ) echo $xng_logo; else echo ( $dir.'/images/logo.png' ); ?>" alt="<?php bloginfo('name'); ?>" /></a></h1>
                     <?php } ?>
                 </div><!-- .brand -->
+                
+            <div class="secure-seal">
+                <span id="ss_img_wrapper_115-55_image_en"><a href="http://www.alphassl.com/ssl-certificates/wildcard-ssl.html" target="_blank" title="SSL Certificates"><img alt="Wildcard SSL Certificates" border=0 id="ss_img" src="//seal.alphassl.com/SiteSeal/images/alpha_noscript_115-55_en.gif" title="SSL Certificate"></a></span><script type="text/javascript" src="//seal.alphassl.com/SiteSeal/alpha_image_115-55_en.js"></script>
+            </div>
+                
                 <?php get_template_part('includes/header-widget-area'); ?>
             </div><!-- #header .wrap -->
         </div><!-- #header -->
