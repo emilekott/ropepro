@@ -281,3 +281,11 @@ li#field_12_1 input, li#field_12_2 input{
 form .form-row-first, form .form-row-last{
     width: 350px;
 }
+
+form .form-row-last {
+    float: left;
+}
+
+fieldset form .form-row-last {
+    float: right;
+}
