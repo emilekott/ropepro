@@ -297,3 +297,7 @@ label.hidden{
 #payment div.payment_box .form-row select{
     margin-top: 5px;
 }
+
+.secure-seal{
+    float:left;
+}
