@@ -306,3 +306,7 @@ label.hidden{
 .header-widget-area{
     width: 200px;
 }
+
+.widgetwrap{
+    margin-bottom: 40px;
+}
