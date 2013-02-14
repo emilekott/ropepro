@@ -300,5 +300,9 @@ label.hidden{
 
 .secure-seal{
     float:left;
-    margin-left: 80px;
+    margin-left: 250px;
+}
+
+.header-widget-area{
+    width: 200px;
 }
