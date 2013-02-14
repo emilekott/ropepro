@@ -277,3 +277,7 @@ li#field_12_1 input, li#field_12_2 input{
     padding: 0 !important;
     border: none !important;
 }
+
+form .form-row-first, form .form-row-last{
+    width: 350px;
+}
