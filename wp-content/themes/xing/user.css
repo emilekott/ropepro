@@ -278,7 +278,7 @@ li#field_12_1 input, li#field_12_2 input{
     border: none !important;
 }
 
-form .form-row-first, form .form-row-last{
+form .form-row-first, form .form-row-last, form f.orm-row{
     width: 350px;
 }
 
@@ -288,4 +288,12 @@ form .form-row-last {
 
 fieldset .form-row-last {
     float: right;
+}
+
+label.hidden{
+    display: none;
+}
+
+#payment div.payment_box .form-row select{
+    margin-top: 5px;
 }
