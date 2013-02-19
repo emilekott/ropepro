@@ -323,6 +323,16 @@ label.hidden{
     margin: 10px 0 0 0;
 }
 
+.widget_ns_mailchimp label{
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.widget_ns_mailchimp form{
+    padding-right: 30px;
+}
+
 
 /*secondary widgets */
 #secondary .one_third{
