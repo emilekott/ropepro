@@ -310,3 +310,15 @@ label.hidden{
 .widgetwrap{
     margin-bottom: 40px;
 }
+
+
+/*mailchimp signup */
+
+.widget_ns_mailchimp input#ns_widget_mailchimp-email-2{
+    width: 170px;
+}
+
+.widget_ns_mailchimp .button{
+    float: right;
+    margin: 10px 0 0 0;
+}
