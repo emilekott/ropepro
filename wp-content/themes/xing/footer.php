@@ -17,31 +17,21 @@ if ( is_active_sidebar( 'secondary-column-1' ) || is_active_sidebar( 'secondary-
 	if ( $hide_secondary != 'true' ): ?>
 	<div id="secondary" role="complementary">
         <div class="wrap clearfix">
-            <div class="one_fifth">
+            <div class="one_third">
             <?php
             if ( is_active_sidebar( 'secondary-column-1' ) )
 				dynamic_sidebar( 'secondary-column-1' );
             ?>
             </div><!-- .one_fifth -->
-            <div class="one_fifth">
-            <?php
-            if ( is_active_sidebar( 'secondary-column-2' ) )
-				dynamic_sidebar( 'secondary-column-2' );
-            ?>
-            </div><!-- .one_fifth -->
-            <div class="one_fifth">
+            
+            <div class="one_third">
             <?php
             if ( is_active_sidebar( 'secondary-column-3' ) )
 				dynamic_sidebar( 'secondary-column-3' );
             ?>
             </div><!-- .one_fifth -->
-            <div class="one_fifth">
-            <?php
-            if ( is_active_sidebar( 'secondary-column-4' ) )
-				dynamic_sidebar( 'secondary-column-4' );
-            ?>
-            </div><!-- .one_fifth -->
-            <div class="one_fifth last">
+            
+            <div class="one_third last">
             <?php
             if ( is_active_sidebar( 'secondary-column-5' ) )
 				dynamic_sidebar( 'secondary-column-5' );
