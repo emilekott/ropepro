@@ -314,7 +314,7 @@ label.hidden{
 
 /*mailchimp signup */
 
-.widget_ns_mailchimp input#ns_widget_mailchimp-email-2{
+.widget_ns_mailchimp input[type="text"]{
     width: 170px;
 }
 
