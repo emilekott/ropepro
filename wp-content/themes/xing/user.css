@@ -323,7 +323,7 @@ label.hidden{
     margin: 10px 0 0 0;
 }
 
-.widget_ns_mailchimp label{
+.widget_ns_mailchimp .widget-field{
     float: left;
     width: 100%;
     margin-bottom: 10px;
