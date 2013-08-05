@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * private $token
  * private $api_url
  * private $errors
- * 
+ *
  * - __construct()
  * - activate()
  * - deactivate()
@@ -35,7 +35,7 @@ class WooThemes_Updater_API {
 
 	public function __construct () {
 		$this->token = 'woothemes-updater';
-		$this->api_url = 'http://www.woothemes.com/'; 
+		$this->api_url = 'http://www.woothemes.com/';
 		$this->errors = array();
 	} // End __construct()
 
@@ -93,7 +93,7 @@ class WooThemes_Updater_API {
 
 	/**
 	 * Make a request to the WooThemes API.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0.0
 	 * @param string $endpoint (must include / prefix)
@@ -118,6 +118,9 @@ class WooThemes_Updater_API {
 			}
 		}
 
+		// Pass if this is a network install on all requests
+		$url = add_query_arg( 'network', is_multisite() ? 1 : 0, $url );
+
 		$response = wp_remote_get( $url, array(
 			'method' => 'GET',
 			'timeout' => 45,
@@ -125,7 +128,8 @@ class WooThemes_Updater_API {
 			'httpversion' => '1.0',
 			'blocking' => true,
 			'headers' => array(),
-			'cookies' => array()
+			'cookies' => array(),
+			'ssl_verify' => false
 		    )
 		);
 
@@ -140,16 +144,19 @@ class WooThemes_Updater_API {
 		if ( isset( $data->error ) && ( '' != $data->error ) ) {
 			$error = esc_html( $data->error );
 			$error = '<strong>' . $error . '</strong>';
-			if ( isset( $data->additional_info ) ) { $error .= '<br /><br />' . esc_html( $data->additional_info ); } 
+			if ( isset( $data->additional_info ) ) { $error .= '<br /><br />' . esc_html( $data->additional_info ); }
+			$this->log_request_error( $error );
+		}elseif ( empty( $data ) ) {
+			$error = '<strong>There was an error making your request, please try again.</strong>';
 			$this->log_request_error( $error );
 		}
-		
+
 		return $data;
 	} // End request()
 
 	/**
 	 * Log an error from an API request.
-	 * 
+	 *
 	 * @access private
 	 * @since 1.0.0
 	 * @param string $error

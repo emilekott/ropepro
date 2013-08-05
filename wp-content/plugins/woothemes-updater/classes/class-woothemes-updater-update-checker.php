@@ -29,51 +29,52 @@ class WooThemes_Updater_Update_Checker {
 	private $api_url;
 	private $product_id;
 	private $file_id;
-	private $license_hash;
+	//private $license_hash;
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @access public
 	 * @since  1.0.0
 	 * @return void
 	 */
-	public function __construct ( $file, $product_id, $file_id, $license_hash ) {
-		$this->api_url = 'http://www.woothemes.com/?wc-api=woothemes-installer-api&'; 
+	public function __construct ( $file, $product_id, $file_id, $license_hash = '' ) {
+		$this->api_url = 'http://www.woothemes.com/?wc-api=woothemes-installer-api&';
 		$this->file = $file;
 		$this->product_id = $product_id;
 		$this->file_id = $file_id;
 		$this->license_hash = $license_hash;
 
 		// Check For Updates
-		add_filter( 'pre_set_site_transient_update_plugins', array( &$this, 'update_check' ) );
+		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'update_check' ) );
 
 		// Check For Plugin Information
-		add_filter( 'plugins_api', array( &$this, 'plugin_information' ), 10, 3 );
+		add_filter( 'plugins_api', array( $this, 'plugin_information' ), 10, 3 );
 	} // End __construct()
 
 	/**
 	 * Check for updates against the remote server.
-	 * 
+	 *
 	 * @access public
 	 * @since  1.0.0
 	 * @param  object $transient
 	 * @return object $transient
 	 */
 	public function update_check ( $transient ) {
+
 	    // Check if the transient contains the 'checked' information
 	    // If no, just return its value without hacking it
 	    if( empty( $transient->checked ) )
 	        return $transient;
-	    
+
 	    // The transient contains the 'checked' information
 	    // Now append to it information form your own API
 	    $args = array(
 	        'request' => 'pluginupdatecheck',
 	        'plugin_name' => $this->file,
-	        'version' => $transient->checked[$this->file], 
+	        'version' => $transient->checked[$this->file],
 	        'product_id' => $this->product_id,
-	        'file_id' => $this->file_id,  
+	        'file_id' => $this->file_id,
 	        'license_hash' => $this->license_hash,
 	        'url' => esc_url( home_url( '/' ) )
 	    );
@@ -81,32 +82,31 @@ class WooThemes_Updater_Update_Checker {
 	    // Send request checking for an update
 	    $response = $this->request( $args );
 
-
 	    // If response is false, don't alter the transient
 	    if( false !== $response ) {
 
 	    	if( isset( $response->errors ) && isset ( $response->errors->woo_updater_api_license_deactivated ) ){
 
-	    		add_action('admin_notices', array( &$this, 'error_notice_for_deactivated_plugin') );  
+	    		add_action('admin_notices', array( $this, 'error_notice_for_deactivated_plugin') );
 
 	    	}else{
-	        	
+
 	        	$transient->response[$this->file] = $response;
 
 	        }
-	        
+
 	    }
 
 	    return $transient;
 	} // End update_check()
-	
+
 	/**
-	 * Display an error notice 
-	 * @param  strin $message The message 
+	 * Display an error notice
+	 * @param  strin $message The message
 	 * @return void
 	 */
-	public function error_notice_for_deactivated_plugin( $message ){
-		
+	public function error_notice_for_deactivated_plugin( $message ) {
+
 		$plugins = get_plugins();
 
 		$plugin_name = isset( $plugins[$this->file] ) ? $plugins[$this->file]['Name'] : $this->file;
@@ -116,12 +116,12 @@ class WooThemes_Updater_Update_Checker {
 	}
 	/**
 	 * Check for the plugin's data against the remote server.
-	 * 
+	 *
 	 * @access public
 	 * @since  1.0.0
 	 * @return object $response
 	 */
-	public function plugin_information ( $false, $action, $args ) {	
+	public function plugin_information ( $false, $action, $args ) {
 		$transient = get_site_transient( 'update_plugins' );
 
 		// Check if this plugins API is about this plugin
@@ -132,10 +132,10 @@ class WooThemes_Updater_Update_Checker {
 		// POST data to send to your API
 		$args = array(
 			'action' => 'plugininformation',
-			'plugin_name' => $this->file, 
-			'version' => $transient->checked[$this->file], 
+			'plugin_name' => $this->file,
+			'version' => $transient->checked[$this->file],
 			'product_id' => $this->product_id,
-			'file_id' => $this->file_id, 
+			'file_id' => $this->file_id,
 	        'license_hash' => $this->license_hash,
 	        'url' => esc_url( home_url( '/' ) )
 		);
@@ -159,7 +159,7 @@ class WooThemes_Updater_Update_Checker {
 
 	/**
 	 * Generic request helper.
-	 * 
+	 *
 	 * @access private
 	 * @since  1.0.0
 	 * @param  array $args
@@ -173,9 +173,9 @@ class WooThemes_Updater_Update_Checker {
 			'redirection' => 5,
 			'httpversion' => '1.0',
 			'blocking' => true,
-			'headers' => array(),
+			'headers' => array( 'user-agent' => 'WooThemesUpdater/1.1.0' ),
 			'body' => $args,
-			'cookies' => array(), 
+			'cookies' => array(),
 			'sslverify' => false
 		    ) );
 	    // Make sure the request was successful

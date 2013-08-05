@@ -27,26 +27,24 @@ class WooThemes_Updater_Self_Updater {
 
 	/**
 	 * __construct function.
-	 * 
+	 *
 	 * @access public
 	 * @return void
 	 */
 	public function __construct ( $file ) {
-		global $woodojo;
-
 		$this->api_url = 'http://www.woothemes.com/woo-dojo-api/';
 		$this->file = plugin_basename( $file );
 
 		// Check For Updates
-		add_filter( 'pre_set_site_transient_update_plugins', array( &$this, 'update_check' ) );
+		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'update_check' ) );
 
 		// Check For Plugin Information
-		add_filter( 'plugins_api', array( &$this, 'plugin_information' ), 10, 3 );
+		add_filter( 'plugins_api', array( $this, 'plugin_information' ), 10, 3 );
 	} // End __construct()
 
 	/**
 	 * update_check function.
-	 * 
+	 *
 	 * @access public
 	 * @param object $transient
 	 * @return object $transient
@@ -56,7 +54,7 @@ class WooThemes_Updater_Self_Updater {
 	    // If no, just return its value without hacking it
 	    if( empty( $transient->checked ) )
 	        return $transient;
-	    
+
 	    // The transient contains the 'checked' information
 	    // Now append to it information form your own API
 	    $args = array(
@@ -74,28 +72,28 @@ class WooThemes_Updater_Self_Updater {
 	    }
 	    return $transient;
 	} // End update_check()
-	
+
 	/**
 	 * plugin_information function.
-	 * 
+	 *
 	 * @access public
 	 * @return object $response
 	 */
-	public function plugin_information ( $false, $action, $args ) {	
+	public function plugin_information ( $false, $action, $args ) {
 		$transient = get_site_transient( 'update_plugins' );
 
 		// Check if this plugins API is about this plugin
-		if( $args->slug != dirname( $this->file ) ) {
+		if( ! isset( $args->slug ) || $args->slug != dirname( $this->file ) ) {
 			return $false;
 		}
 
 		// POST data to send to your API
 		$args = array(
 			'action' => 'plugininformation',
-			'plugin_name' => $this->file, 
+			'plugin_name' => $this->file,
 			'version' => $transient->checked[$this->file]
 		);
-		
+
 		// Send request for detailed information
 		$response = $this->request( $args );
 
@@ -115,7 +113,7 @@ class WooThemes_Updater_Self_Updater {
 
 	/**
 	 * request function.
-	 * 
+	 *
 	 * @access public
 	 * @param array $args
 	 * @return object $response or boolean false
@@ -128,9 +126,9 @@ class WooThemes_Updater_Self_Updater {
 			'redirection' => 5,
 			'httpversion' => '1.0',
 			'blocking' => true,
-			'headers' => array(),
+			'headers' => array( 'user-agent' => 'WooThemesUpdater/1.1.0' ),
 			'body' => $args,
-			'cookies' => array(), 
+			'cookies' => array(),
 			'sslverify' => false
 		    ) );
 
@@ -139,7 +137,7 @@ class WooThemes_Updater_Self_Updater {
 	        // Request failed
 	        return false;
 	    }
-	    
+
 	    // Read server response, which should be an object
 	    if ( $request != '' ) {
 	    	$response = json_decode( wp_remote_retrieve_body( $request ) );
