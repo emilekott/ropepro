@@ -675,7 +675,7 @@ h5.activetoggle span { background-position:0 -27px }
 padding: 10px;
 border: 1px solid #eee;
 }
-
+ul.jcarousel-list.jcarousel-list-horizontal{height: 300px;}
 #sidebar ul li {
   border: none;
 }
