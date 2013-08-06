@@ -1,7 +1,50 @@
 *** Gravity Forms Product Add-Ons Changelog ***
 
+2013.07.16 - version 2.4.4
+	* Update: CSS tweaks for display of checkbox items in the cart.
+
+2013.06.18 - version 2.4.3
+	* Update:  Added notice that Gravity Forms is required.
+	* Fix:  Incorrect text domain used in some strings.
+
+2013.05.04 - version 2.4.2
+  * Update for PHP 5.4.
+  * Updates for total discounting and dynamic pricing.
+  * Fixes additional 1.7 compatibility issues.
+
+2013.04.29 - version 2.4.1
+  * Additional support for Gravity Forms 1.7x
+  * Modified HTML stripping rules to strip only when it's not a file upload field.
+
+2013.04.25 - version 2.4.0
+  * Support for Gravity Forms 1.7x
+
+2013.04.22 - version 2.3.3
+ * Added: Filter to control when HTML is stripped from the order.
+        apply_filters('woocommerce_gforms_strip_meta_html', $strip_html, $value, $field, $entry, $form_meta, $order_item_id, $cart_item);
+
+2013.04.22 - version 2.3.2
+    * Multisite activation compatibiliity.
+
+2013.04.11 - version 2.3.1
+    * Update - strip tags from fields that generate HTML, such as the list field.
+
+2013.04.09 - version 2.3
+    * Added support for displaying calculations when price effected by dynamic pricing simple rules.
+
+2013.03.21 - version 2.2.3
+   * Fixes scripts not rendering on all product types, preventing multipage from working when Totals were disabled.
+
+2013.03.04 - version 2.2.2
+   * Updated order meta for WC 2.0 compatibility.
+   * Fix to make variable products compatible with WC 2.0
+
+2013.03.01 - version 2.2
+   * Fix for quantity field on multipage forms
+   * Fix for display problem with variation sale price when gravity form total calculations are disabled.
+
 2013.01.22 - version 2.1
-   * Added support for image / upload fields on multi-page forms as well as forms that have validation. 
+   * Added support for image / upload fields on multi-page forms as well as forms that have validation.
 
 2012.12.28 - version 2.0
    *Support for WooCommerce 2.0
@@ -10,7 +53,7 @@
    *Fix $wpdb->prepare error after WP3.5 upgrades
 
 2012.12.08 - version 1.4.0
-    *Standard gravity forms product fields added to cart item meta, and order item meta. Use a hidden product if you do not want the gravity form product to show to the end user. 
+    *Standard gravity forms product fields added to cart item meta, and order item meta. Use a hidden product if you do not want the gravity form product to show to the end user.
 
 2012.12.04 - version 1.3.9
  * New updater

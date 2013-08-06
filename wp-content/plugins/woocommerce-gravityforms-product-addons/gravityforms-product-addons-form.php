@@ -32,9 +32,9 @@ class woocommerce_gravityforms_product_form {
                     'field_values' => false,
                     'ajax' => false,
                     'tabindex' => 1,
-                    'label_subtotal' => __('Subtotal', 'wc_gravityforms'),
-                    'label_options' => __('Options', 'wc_gravityforms'),
-                    'label_total' => __('Total', 'wc_gravityforms'),
+                    'label_subtotal' => __('Subtotal', 'wc_gf_addons'),
+                    'label_options' => __('Options', 'wc_gf_addons'),
+                    'label_total' => __('Total', 'wc_gf_addons'),
                     'disable_label_subtotal' => 'no',
                     'disable_label_options' => 'no',
                     'disable_label_total' => 'no',
@@ -45,7 +45,8 @@ class woocommerce_gravityforms_product_form {
         $form_meta = RGFormsModel::get_form_meta($this->form_id);
         if (!empty($form_meta)) {
 
-            $_POST['gform_submit'] = $_POST['gform_old_submit'];
+            $_POST['gform_submit'] = isset($_POST['gform_old_submit']) ? $_POST['gform_old_submit'] : '';
+
             $form = RGForms::get_form($this->form_id, $display_title, $display_description, $display_inactive, $field_values, $ajax, $tabindex);
             $_POST['gform_old_submit'] = $_POST['gform_submit'];
             unset($_POST['gform_submit']);
@@ -88,8 +89,8 @@ class woocommerce_gravityforms_product_form {
             ?>
 
             <?php
+            add_action('wp_footer', array(&$this, 'print_scripts'));
             if ($disable_calculations == 'no') :
-                add_action('wp_footer', array(&$this, 'print_scripts'));
                 ?>
 
                 <div class="product_totals">
@@ -123,17 +124,20 @@ class woocommerce_gravityforms_product_form {
                         </li>
                     </ul>
                 </div>
-
-
                 <style>
                     .single_variation .price {
                         display:none !important;
                     }
-                    .hidden-total {
-                        display:none !important;
-                    }
                 </style>
             <?php endif; ?>
+            <style>
+                .hidden-total {
+                    display:none !important;
+                }
+            </style>
+
+
+
             <?php
             echo '</div>';
         }
@@ -165,20 +169,20 @@ class woocommerce_gravityforms_product_form {
             function gform_product_total(formId, total){ 
                 return update_dynamic_price(total);
             }
-                                                                            
+                                                                                            
             function update_dynamic_price(gform_total){
                 jQuery('button.gform_button').attr('disabled', 'disabled');     
                 jQuery('div.product_totals').block({message: null, overlayCSS: {background: '#fff url(' + woocommerce_params.plugin_url + '/assets/images/ajax-loader.gif) no-repeat center', opacity: 0.6}});
-                                
+                                                
                 var base = jQuery('#woocommerce_product_base_price').val();
-                                                                           
+                                                                                           
                 if (ajax_price_req) {
                     ajax_price_req.abort();
                 }
-                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                    
                 var opts = "product_id=" + jQuery("#product_id").val() + "&variation_id=" + jQuery("input[name=variation_id]").val();
                 opts += '&action=get_updated_price&gform_total=' + gform_total;
-                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                    
                 ajax_price_req = jQuery.ajax({
                     type: "POST",
                     url: woocommerce_params.ajax_url,
@@ -188,45 +192,46 @@ class woocommerce_gravityforms_product_form {
                         jQuery('.formattedBasePrice').html( (response.formattedBasePrice) );
                         jQuery('.formattedVariationTotal').html( response.formattedVariationTotal);
                         jQuery('.formattedTotalPrice').html( response.formattedTotalPrice);
-                                                        
+                                                                        
                         jQuery('div.product_totals').unblock();
                         jQuery('button.gform_button').removeAttr('disabled');
                     }
                 });                                                                                                                                                                                                                                                                                  
                 return gform_total;
             }
-                                                                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                                                                                            
             jQuery(document).ready(function($) {
                 $("form.cart").attr('action', '');
-                                
+                                                
                 $('body').delegate('form.cart', 'found_variation', function(){
                     try { gf_apply_rules(<?php echo $this->form_id ?>,["0"]); } catch(err) { }                                                                                                                                                                                                
                     gformCalculateTotalPrice(<?php echo $this->form_id ?>);
                 });  
-                                
-                                
-                                                                                                                                                                
+                                                
+                                                
+                                                                                                                                                                                
                 $('button[type=submit]', 'form.cart').attr('id', 'gform_submit_button_<?php echo $this->form_id ?>').addClass('button gform_button');
-                                
+                                                
         <?php if ($this->next_page != 0) : ?>
-                    $('button[type=submit]', 'form.cart').remove();    
+                    $('button[type=submit]', 'form.cart').remove();
+                    $('div.quantity').remove(); 
         <?php endif; ?>
-                                
+                                                
                 try { gf_apply_rules(<?php echo $this->form_id ?>,["0"]); } catch(err) { }
-                                        
+                                                        
                 $('.gform_next_button', 'form.cart').attr('onclick', '');
                 $('.gform_next_button', 'form.cart').click(function(event) {
-                                            
+                                                            
                     $("#gform_target_page_number_<?php echo $this->form_id; ?>").val("<?php echo $this->next_page; ?>"); 
                     $("form.cart").trigger("submit",[true]); 
-                                            
+                                                            
                 });
-                                
+                                                
                 $('.gform_previous_button', 'form.cart').click(function(event) {
-                                            
+                                                            
                     $("#gform_target_page_number_<?php echo $this->form_id; ?>").val("<?php echo $this->previous_page; ?>"); 
                     $("form.cart").trigger("submit",[true]); 
-                                            
+                                                            
                 });
             });                                    
         </script>

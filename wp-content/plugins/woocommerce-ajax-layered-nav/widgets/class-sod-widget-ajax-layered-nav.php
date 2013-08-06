@@ -2,26 +2,21 @@
 /**
  * Layered Nav Init
  */
-add_action( 'init', 'woocommerce_ajax_layered_nav_init', 1 );
+add_action( 'init', 'sod_ajax_layered_nav_init', 99 );
 
-function woocommerce_ajax_layered_nav_init( ) {
-
-	if ( is_active_widget( false, false, 'woocommerce_layered_nav', true ) && ! is_admin() )
-		return;
+function sod_ajax_layered_nav_init( ) {
 
 	if ( is_active_widget( false, false, 'sod_ajax_layered_nav', true ) && ! is_admin() ) {
 
 		global $_chosen_attributes, $woocommerce, $_attributes_array;
+		$_chosen_attributes = $_attributes_array = array();
 
-		$_chosen_attributes = array();
-		$_attributes_array = array();
-
-		$attribute_taxonomies = $woocommerce->attribute_taxonomies;
+		$attribute_taxonomies = $woocommerce->get_attribute_taxonomies();
 		if ( $attribute_taxonomies ) {
 			foreach ( $attribute_taxonomies as $tax ) {
 
-		    	$attribute = strtolower(sanitize_title($tax->attribute_name));
-		    	$taxonomy = $woocommerce->attribute_taxonomy_name($attribute);
+		    	$attribute = sanitize_title( $tax->attribute_name );
+		    	$taxonomy = $woocommerce->attribute_taxonomy_name( $attribute );
 
 				// create an array of product attribute taxonomies
 				$_attributes_array[] = $taxonomy;
@@ -29,22 +24,24 @@ function woocommerce_ajax_layered_nav_init( ) {
 		    	$name = 'filter_' . $attribute;
 		    	$query_type_name = 'query_type_' . $attribute;
 
-		    	if ( ! empty( $_GET[$name] ) && taxonomy_exists( $taxonomy ) ) {
+		    	if ( ! empty( $_GET[ $name ] ) && taxonomy_exists( $taxonomy ) ) {
 
-		    		$_chosen_attributes[$taxonomy]['terms'] = explode( ',', $_GET[ $name ] );
+		    		$_chosen_attributes[ $taxonomy ]['terms'] = explode( ',', $_GET[ $name ] );
 
-		    		if ( ! empty( $_GET[$query_type_name] ) && $_GET[ $query_type_name ] == 'or' )
-		    			$_chosen_attributes[$taxonomy]['query_type'] = 'or';
+		    		if ( ! empty( $_GET[ $query_type_name ] ) && $_GET[ $query_type_name ] == 'or' )
+		    			$_chosen_attributes[ $taxonomy ]['query_type'] = 'or';
 		    		else
-		    			$_chosen_attributes[$taxonomy]['query_type'] = 'and';
+		    			$_chosen_attributes[ $taxonomy ]['query_type'] = 'and';
 
 				}
 			}
 	    }
 
 	    add_filter('loop_shop_post_in', 'woocommerce_ajax_layered_nav_query');
-    }
+   }
 }
+
+
 /**
  * Layered Nav post filter
  *
@@ -55,19 +52,19 @@ function woocommerce_ajax_layered_nav_init( ) {
  */
 function woocommerce_ajax_layered_nav_query( $filtered_posts ) {
 	global $_chosen_attributes, $woocommerce, $wp_query;
-
-	if (sizeof($_chosen_attributes)>0) :
+	
+	if ( sizeof( $_chosen_attributes ) > 0 ) {
 
 		$matched_products = array();
 		$filtered_attribute = false;
 
-		foreach ($_chosen_attributes as $attribute => $data) :
+		foreach ( $_chosen_attributes as $attribute => $data ) {
 
 			$matched_products_from_attribute = array();
 			$filtered = false;
 
-			if (sizeof($data['terms'])>0) :
-				foreach ($data['terms'] as $value) :
+			if ( sizeof( $data['terms'] ) > 0 ) {
+				foreach ( $data['terms'] as $value ) {
 
 					$posts = get_posts(
 						array(
@@ -87,54 +84,50 @@ function woocommerce_ajax_layered_nav_query( $filtered_posts ) {
 					);
 
 					// AND or OR
-					if ($data['query_type']=='or') :
+					if ( $data['query_type'] == 'or' ) {
 
-						if (!is_wp_error($posts) && (sizeof($matched_products_from_attribute)>0 || $filtered)) :
+						if ( ! is_wp_error( $posts ) && ( sizeof( $matched_products_from_attribute ) > 0 || $filtered ) )
 							$matched_products_from_attribute = array_merge($posts, $matched_products_from_attribute);
-						elseif (!is_wp_error($posts)) :
+						elseif ( ! is_wp_error( $posts ) )
 							$matched_products_from_attribute = $posts;
-						endif;
 
-					else :
+					} else {
 
-						if (!is_wp_error($posts) && (sizeof($matched_products_from_attribute)>0 || $filtered)) :
+						if ( ! is_wp_error( $posts ) && ( sizeof( $matched_products_from_attribute ) > 0 || $filtered ) )
 							$matched_products_from_attribute = array_intersect($posts, $matched_products_from_attribute);
-						elseif (!is_wp_error($posts)) :
+						elseif ( ! is_wp_error( $posts ) )
 							$matched_products_from_attribute = $posts;
-						endif;
-
-					endif;
+					}
 
 					$filtered = true;
 
-				endforeach;
-			endif;
+				}
+			}
 
-			if (sizeof($matched_products)>0 || $filtered_attribute) :
-				$matched_products = array_intersect($matched_products_from_attribute, $matched_products);
-			else :
+			if ( sizeof( $matched_products ) > 0 || $filtered_attribute )
+				$matched_products = array_intersect( $matched_products_from_attribute, $matched_products );
+			else
 				$matched_products = $matched_products_from_attribute;
-			endif;
 
 			$filtered_attribute = true;
 
-		endforeach;
+		}
 
-		if ($filtered) :
+		if ( $filtered ) {
 
 			$woocommerce->query->layered_nav_post__in = $matched_products;
 			$woocommerce->query->layered_nav_post__in[] = 0;
 
-			if (sizeof($filtered_posts)==0) :
+			if ( sizeof( $filtered_posts ) == 0 ) {
 				$filtered_posts = $matched_products;
 				$filtered_posts[] = 0;
-			else :
-				$filtered_posts = array_intersect($filtered_posts, $matched_products);
+			} else {
+				$filtered_posts = array_intersect( $filtered_posts, $matched_products );
 				$filtered_posts[] = 0;
-			endif;
+			}
 
-		endif;
-	endif;
+		}
+	}
 
 	return (array) $filtered_posts;
 }
@@ -454,7 +447,7 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 							endif;
 
 							echo '<li class="'.$class.'">';
-							//$link = "";<a href="'.$link.'" data-filter"'.$link.'">'; else echo '<span>
+							//$link = '<a href="'.$link.'" data-filter"'.$link.'">';
 							if ($count>0 || $option_is_set) echo '<a href="#" data-filter"'.$link.'" data-link="'.$link.'" >'; else echo '<span>';
 
 							echo '<div class="size-filter">'.$labels[$term->term_id].'</div>';
@@ -680,7 +673,7 @@ class SOD_Widget_Ajax_Layered_Nav extends WP_Widget {
 								$value = isset($labels) ? esc_attr($labels[$attribute->term_id]):"";
 								$html.='<tr>
 											<td class="labels"><label for="'.$this->get_field_name('labels').'['.$instance['attribute'].']">'.$attribute->name.'</label></td>
-											<td class="inputs"><input type="text" name="'.$this->get_field_name('labels').'['.$attribute->term_id.']" id="'.$this->get_field_id('labels').'['.$attribute->term_id.']" value="'.$value.'" size="3" maxlength="3"/></td>
+											<td class="inputs"><input type="text" name="'.$this->get_field_name('labels').'['.$attribute->term_id.']" id="'.$this->get_field_id('labels').'['.$attribute->term_id.']" value="'.$value.'" size="3"/></td>
 										</tr>';
 							}
 							endif;

@@ -9,13 +9,14 @@
  * Setup variables and id  for areas that are 
  * going to be refreshed
  */
-var content = new Array;			//Areas to be refreshed
-	content[0] = "products";		//Products id wrapper
-	content[1] = "pagination-wrapper";//Pagination id wrapper
-var elements_to_remove = new Array; //Pop items in and out of this array so we know they've been refreshed
-var DocReadyReload = false;			//Set this to true if your getting sone javascript problems
-var isWorking = false;				//Flag to know if we're fetching a refresh
-var http = getHTTPObject();			//Http object
+var content 	= ajax_layered_nav.containers;		// new Array;			//Areas to be refreshed
+var orderby 	= ajax_layered_nav.orderby;
+var triggers 	= ajax_layered_nav.triggers.join(',');
+
+var elements_to_remove = new Array; 	// Pop items in and out of this array so we know they've been refreshed
+var DocReadyReload = false;				// Set this to true if your getting sone javascript problems
+var isWorking = false;					// Flag to know if we're fetching a refresh
+var http = getHTTPObject();				// Http object
 var pagination
 
 function checkPagination(){
@@ -30,10 +31,13 @@ function checkPagination(){
  */
 jQuery(document).ready(function(){
 	pageLoaderInit();
-	jQuery('.widget_layered_nav').each(function(){
-		content.push(this.id);
-	});
-	return false;
+	// jQuery('.widget_layered_nav, .widget_layered_nav_filters, .widget_ajax_layered_nav_filters').each(function(){
+		// content.push( this.id );
+	// });
+	jQuery(document).on('change',orderby + ' select', function() {
+		jQuery( orderby ).submit();
+		return false;
+	})
 });
 
 /*	Event: onpopstate
@@ -50,7 +54,8 @@ window.onpopstate = function(event) {
  * 			a. Calls fn = loadPage();
  */
 function pageLoaderInit(){
-  jQuery('.widget_layered_nav a, .widget_layered_nav input[type="checkbox"]').live('click', function(event){
+
+  jQuery(triggers).live('click', function(event){
   		this.blur();
       	var caption = this.title || this.name || "";
       	var group = this.rel || false;
@@ -105,12 +110,12 @@ function loadPage(url, push){
 			/* Products container
 			 * add an img / message to the products container to let user know it's being refreshed
 			 */
-			if(value =="products"){
+			if(value ==ajax_layered_nav.product_container){
 				var max = 0;
-				max = jQuery('#products').outerHeight();
-				jQuery('#' + value + '').fadeOut("fast", function() {
-					jQuery('#' + value).html('<center style="min-height:'+max+'px;"><p>'+site.loading_text+'...<br><img src="'+site.loading_img+'" alt="loading"></p></center>');
-					jQuery('#' + value).css({'height':max}).fadeIn("slow", function() {});
+				max = jQuery(ajax_layered_nav.product_container).outerHeight();
+				jQuery(value + '').fadeOut("fast", function() {
+					jQuery(value).html('<center style="min-height:'+max+'px;"><p>'+ajax_layered_nav.loading_text+'...<br><img src="'+ajax_layered_nav.loading_img+'" alt="loading"></p></center>');
+					jQuery(value).css({'height':max}).fadeIn("slow", function() {});
 				});
 			}
 			http.open('GET', url, true);		//Get the new content
@@ -134,59 +139,42 @@ function loadPage(url, push){
 			/* Update content areas */
 			jQuery.each(content, function(index, value){
 				var details = http.responseText; 					//get the ajax response
-				//details = details.split('id="' + value + '"')[1]; 	//get the content for the target areas 
-				//if (details != undefined){
-				
-				if ( jQuery('#' + value, details).size() > 0 ) {
-					
-					//details = details.substring(details.indexOf('>') + 1);
-					
-					var depth = 1;
-					var output = '';
-					
-					jQuery('#' + value).fadeOut("fast", function() {
-						jQuery('#' + value).html( jQuery('#' + value, details).html() );
-						jQuery('#' + value).fadeIn(1);
-						if (DocReadyReload == true) {
-							$(document).trigger("ready");
+				jQuery(value).each(function(){
+					if( this.id != ''){
+						var $id = '#'+this.id;
+						if ( jQuery($id, details).size() > 0  ) {
+							var depth = 1;
+							var output = '';
+							jQuery($id).fadeOut("fast", function() {
+								jQuery($id).html( jQuery($id, details).html() );
+								jQuery($id).fadeIn(1);
+								if (DocReadyReload == true) {
+									$(document).trigger("ready");
+								}
+							});
+						} else {												//Empty the elements
+							jQuery.each(elements_to_remove, function(index,value){
+								jQuery(value).empty();	
+							});
 						}
-					});
-					
-					/*if(value =="products"){							//Products
-						output=output+details.split('</section>')[0];
-						jQuery('#' + value).fadeOut("slow", function() {
-							jQuery('#' + value).html(output);
-							if (DocReadyReload == true) {
-								$(document).trigger("ready");
-							}
-							jQuery('#' + value).fadeIn(1);
-						});
-					}else if(value =="pagination-wrapper"){			//Pagination
-						output=output+details.split('</nav>')[0];
-						jQuery('#' + value).fadeOut("slow", function() {
-							jQuery('#' + value).html(output);
-							if (DocReadyReload == true) {
-								$(document).trigger("ready");
-							}
-							jQuery('#' + value).fadeIn(1);
-						});
-					}else{											//Widgets
-						output=output+details.split('</aside>')[0];
-						jQuery('#' + value).fadeOut("fast", function() {
-							jQuery('#' + value).html(output);
-							if (DocReadyReload == true) {
-								$(document).trigger("ready");
-							}
-							jQuery('#' + value).fadeIn("fast", function() {});
-						});
-					}*/
-					
-				} else {												//Empty the elements
-					jQuery.each(elements_to_remove, function(index,value){
-						jQuery('#'+value).empty();	
-					});
-				}
-				
+					}else{
+						if ( jQuery(value, details).size() > 0 ) {
+							var depth = 1;
+							var output = '';
+							jQuery(value).fadeOut("fast", function() {
+								jQuery(value).html( jQuery(value, details).html() );
+								jQuery(value).fadeIn(1);
+								if (DocReadyReload == true) {
+									$(document).trigger("ready");
+								}
+							});
+						} else {												//Empty the elements
+							jQuery.each(elements_to_remove, function(index,value){
+								jQuery(value).empty();	
+							});
+						}
+					}
+				});
 		});
 		/* Re-fire the pageLoaderInit() function. This adds the live click handlers to the newly
 		 * readded elemets 

@@ -1,7 +1,25 @@
 *** Ajax Layered Nav Changelog ***
-2012.12.06 - version 1.1.2
- * Tweak priorities 
+2013.05.22 - version 1.2.5
+ * Triggers filters in jquery
  
+2013.04.02 - version 1.2.4
+ * Add register widget to is_woocommerce_active() function
+ 
+2013.03.25 - version 1.2.3
+ * Fix orderby filter.
+
+2012.03.17 - version 1.2.2
+ * check ids on ajax update
+
+2012.03.17 - version 1.2.1
+ * filters for ids, product container, classes; fix for sorting change in 2.0
+
+2012.02.01 - version 1.2.0
+ * 2.0 Compatibility; Add Ajax Layered Nav Filters Widget
+
+2012.12.06 - version 1.1.2
+ * Tweak priorities
+
 2012.12.04 - version 1.1.1
  * New updater
 

@@ -1,5 +1,21 @@
 *** PayPal Pro Changelog ***
 
+2013.07.22 - version 3.0.3
+ * Added wc_paypal_pro_payflow_request and wc_paypal_pro_request filters for the payment request.
+
+2013.04.18 - version 3.0.2
+ * 3 filters for adding currencies
+ * Log remote post errors
+
+2013.03.13 - version 3.0.1
+ * Debug mode
+ * Sending line items is optional
+ * Tweaks to line item sending code
+
+2013.02.06 - version 3.0.0
+ * Support for PayPal Pro Payflow Edtion
+ * EMAIL sent with dodirectpayment request
+
 2013.01.06 - version 2.2.0
  * Tweak to item amount calculations
 
