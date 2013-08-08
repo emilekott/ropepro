@@ -649,12 +649,7 @@ ul.ss_tabs li a { display:inline-block; font-size:13px; color:#666; font-weight:
 ul.ss_tabs li a:hover { color:#333; text-decoration:none }
 ul.ss_tabs li.ui-tabs-selected a { background:#fff; color:#333; border-bottom-color:#fff }
 .tabbed { position:relative; overflow:hidden; padding:12px 0 0; border-top:1px solid #e5e5e5 }
-ul.tabs { margin:0 0 -1px; padding:0; list-style:none; position:relative; overflow:hidden; width:100%; z-index:10; border-left:1px solid #e5e5e5 }
-ul.tabs li { float:left }
-ul.tabs li a { display:inline-block; font-size:13px; color:#666; font-weight:bold; padding:8px 10px; border:1px solid #e5e5e5; background:#f9f9f9; border-left-color:#fff }
-ul.tabs li a:hover { color:#333; text-decoration:none }
-ul.tabs li.ui-tabs-selected a { background:#fff; color:#333; border-bottom-color:#fff }
-.tabbed { position:relative; overflow:hidden; padding:12px 0 0; border-top:1px solid #e5e5e5 }
+
 
 /* Accordion and Toggle */
 .accordion { position:relative; overflow:hidden; margin:0 0 18px; padding:0 }
@@ -671,14 +666,7 @@ h5.toggle span { width:7px; height:7px; margin:6px 8px 0 0; display:block; backg
 h5.activetoggle span { background-position:0 -27px }
 .toggle_content, .acc_content { margin-bottom:0 }
 .ui-tabs .ui-tabs-hide { display: none }
-.panel {
-padding: 10px;
-border: 1px solid #eee;
-}
-ul.jcarousel-list.jcarousel-list-horizontal{height: 300px;}
-#sidebar ul li {
-  border: none;
-}
+
 /* Horizontal Rules */
 .hr { border-bottom:1px solid #e5e5e5; margin-bottom:20px }
 .double_hr { background:url(images/double_hr.png) bottom repeat-x; height:3px; margin-bottom:20px }
